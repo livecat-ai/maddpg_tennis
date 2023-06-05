@@ -4,7 +4,8 @@ import numpy as np
 from ddpg_agent import Agent, OUNoise, ReplayBuffer
 
 if __name__ in "__main__":
-    env = UnityEnvironment(file_name="C:/Users/johnb/repos/deep-reinforcement-learning/p3_collab-compet/Tennis_Windows_x86_64/Tennis.exe")
+    root_dir = "C:/Users/johnb/repos/Udacity/deep-reinforcement-learning/p3_collab-compet/Tennis_Windows_x86_64"
+    env = UnityEnvironment(file_name=root_dir+"/Tennis.exe")
 
     # get the default brain
     brain_name = env.brain_names[0]
