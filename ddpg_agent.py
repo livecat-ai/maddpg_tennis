@@ -72,10 +72,8 @@ class Agent():
             action = self.actor_local(state).cpu().data.numpy()
         self.actor_local.train()
         if noise:
-            # sign = np.sign(action)
-            # action += ((-sign) * self.noise.sample() * 1.0)
             action += self.noise.sample()
-            # action += np.random.randn(action.shape[0]) * noise
+
         return np.clip(action, -1, 1)
 
 

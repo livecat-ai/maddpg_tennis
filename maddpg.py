@@ -41,9 +41,9 @@ class MaddpgAgent:
                 agent.learn(samples, self.discount_factor)
 
 
-    def add(self, obs, actions, rewards, next_obs, dones):
-        for i in range(self.num_agents):
-            self.memory.add(obs[i], actions[i], rewards[i], next_obs[i], dones[i])
+    # def add(self, obs, actions, rewards, next_obs, dones):
+    #     for i in range(self.num_agents):
+    #         self.memory.add(obs[i], actions[i], rewards[i], next_obs[i], dones[i])
 
     # def update(self, obs, actions, rewards, next_obs, dones):
     #     for i in range(self.num_agents):
