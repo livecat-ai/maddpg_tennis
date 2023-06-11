@@ -26,30 +26,72 @@ The environment is considered solved, when the average (over 100 episodes) of th
 
 # Installation
 
+## Important
+Because the exercises in this course haven't been updated for quite some time, many of the requirements needed to run the Unity Tennis enviroment are depriciated and no longer work. Because of this, I was unable to get the environment running under current version of Linux or OSX.
 
+I could however finally get the code running under Windows10 and Windows11. It maybe be possible that the environment would run on older Linux versions but I didn't try that.
 
+### Setup Conda on Windows
 1. Install Conda on Windows.
-Create a env Conda using Python 3.6
-conda create --name drlnd python=3.6 
-3. Activate this env. `conda activate drlnd`
-4. Within this environment, you will need to install the necessary packages manually using PIP.
+Create a Conda env using Python 3.6
+`conda create --name drlnd python=3.6`
+2. Activate this env. `conda activate drlnd`
+3. Within this environment, you will need to install the necessary packages manually using PIP.
+Install Packages using PIP.
 
-4.1 Install torch==0.4.0 manually: Download torch 0.4.0 wheel from http://download.pytorch.org/whl/cpu/torch-0.4.0-cp36-cp36m-win_amd64.whl
+### Download and install torch 0.4.0
+Torch 0.4.0 is no longer supported. Follow the step below to install it.
 
-Install Packages using PIP. First of all, you should go to your workspace, and download all your work using the following command in a cell from your notebook:
- 
+1. Install torch==0.4.0 manually: Download torch 0.4.0 wheel from http://download.pytorch.org/whl/cpu/torch-0.4.0-cp36-cp36m-win_amd64.whl
+2. `pip install --no-deps FILE-PATH\torch-0.4.0-cp36-cp36m-win_amd64.whl`
 
-!tar chvfz notebook.tar.gz *
-Then, unzip this file, and go to the directory where you unzipped it. In this directory, open a terminal and introduce the next command to move to the python folder.
+### Clone the deep-reinforcement-learning repository from Github
+1. Clone the Udacity Deep Reinforcement Learning repository: `git clone https://github.com/udacity/deep-reinforcement-learning.git`
 
-cd python
-Using the terminal in this folder, introduce the next command in order to install all the packages:
+### Install the required package using pip
+1. `cd deep-reinforcement-learning/python`
+2. Type: `pip install .` to install all the required packages
 
-pip install .
-In case of problems with some of the packages, just remove it from the requirements.txt file and try to install it manually. I seem to remember that the torch==0.4.0 package is missing. If this installation gives you your problem, there are two solutions:
+### Download and install the Unity Tennis environment
+1. Then follow the instruction here to download the and install the Unity environment: https://learn.udacity.com/nanodegrees/nd893/parts/cd1764/lessons/f3f81a69-a3b4-4607-bf18-24b10e0d136a/concepts/89f15922-056f-4aed-bb8d-438503b48731
+2. Be sure to install the Windows version supported by your machine.
 
-1) Modify the torch==0.4.1 file, as this version is also supported.
+### Download this repository
+1. Download this repository to the p3_collab-compet/ folder.
 
-2) Install torch==0.4.0 manually: Download torch 0.4.0 wheel from http://download.pytorch.org/whl/cpu/torch-0.4.0-cp36-cp36m-win_amd64.whl. Once downloaded, introduce:
+# Running the code
+1. cd to /deep-reinforcement-learning/p3_collab-compet/maddpg_tennis/. This directory contains all the code needed to train the agents.
+2. run `jupyter notebook` and open tennis.ipynb. Then run the notebook. Training will start. When finished a graph will be display at the bottom of the notebook showing the learning values for the maddpg agent. You can than close the notebook.
+3. To see the agent play tennis. open Play.ipynb and run the notebook. A Unity window will open and show the agents playing tennis, much like the one at the top of this page.
 
-pip install --no-deps FILE-PATH\torch-0.4.0-cp36-cp36m-win_amd64.whl
+# Report
+I tried many experiments attempting to implement the full MADDPG algorithm as described in the OpenAI paper. However I could get it to work on this environment.
+
+In the end I adapted the code for the ddpg-pendulum environment provided in the deep reinforcement learning repository. The Code was adapted by adding a Maddpg class to manage two independent ddpg agents and a shared replay buffer.
+
+The Actor and Critic models were both two layer MLP with 128 node each. 
+
+Learning was vastly improved by adding dropout layers to both networks. Oddly this was the case even if the dropout rate was set to zero. I'm not sure why this would be, so it needs looking into futher.
+
+## Results
+Then agent reaches the learning goal of 0.5 after about 650 episode. And reaches a maximum score of around 1.4 within a 1000 episodes. 
+
+![Alt text](results.png)
+
+
+## Futher experiments
+A couple of things to try which could improve learning.
+
+1. Reducing the process noise over time might improve improve the highest score and stabilize learning.
+
+2. Using parameter noise instead of adding noise to the action values. This seem very promising. https://openai.com/research/better-exploration-with-parameter-noise
+
+3. Implement a different underlying algorithm like SAC or PPO.
+
+4. Spending more effort on parameter tuning or play with the model architectures.
+
+
+
+
+
+
