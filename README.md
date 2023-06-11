@@ -11,8 +11,7 @@ This project, worked with the Tennis environment.
 ![Cooperative agents playing tennis](MaddpgPong.gif)
 *Trained agents playing tennis*
 
-Unity ML-Agents Tennis Environment
-Unity ML-Agents Tennis Environment
+### Unity ML-Agents Tennis Environment
 
 In this environment, two agents control rackets to bounce a ball over a net. If an agent hits the ball over the net, it receives a reward of +0.1. If an agent lets a ball hit the ground or hits the ball out of bounds, it receives a reward of -0.01. Thus, the goal of each agent is to keep the ball in play.
 
@@ -70,6 +69,19 @@ I tried many experiments attempting to implement the full MADDPG algorithm as de
 In the end I adapted the code for the ddpg-pendulum environment provided in the deep reinforcement learning repository. The Code was adapted by adding a Maddpg class to manage two independent ddpg agents and a shared replay buffer.
 
 The Actor and Critic models were both two layer MLP with 128 node each. 
+The parameters used were:
+`
+NUM_EPISODES = 1000
+MAX_STEPS = 1000
+STEPS_PER_UPDATE = 1
+BUFFER_SIZE = int(1e5)  # replay buffer size
+BATCH_SIZE = 256        # minibatch size
+GAMMA = 0.99            # discount factor
+TAU = 1e-2              # for soft update of target parameters
+LR_ACTOR = 2e-4         # learning rate of the actor 
+LR_CRITIC = 2e-4        # learning rate of the critic
+WEIGHT_DECAY = 0        # L2 weight decay
+`
 
 Learning was vastly improved by adding dropout layers to both networks. Oddly this was the case even if the dropout rate was set to zero. I'm not sure why this would be, so it needs looking into futher.
 
